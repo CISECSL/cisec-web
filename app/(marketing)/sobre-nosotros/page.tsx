@@ -33,7 +33,7 @@ const team = [
     image: "/images/alvaro-morales.jpg",
     description:
       "Lidera la estrategia de CISEC y la relación con clientes. Con más de 20.000 seguidores en LinkedIn, comparte contenido técnico sobre ciberseguridad ofensiva y ayuda a CISOs y CTOs a entender el panorama real de amenazas al que se enfrentan sus organizaciones.",
-    linkedin: "https://www.linkedin.com/in/alvaromoralesmoreno/",
+    linkedin: "https://www.linkedin.com/in/alvaro-morales-ab6480194/",
   },
   {
     name: "Daniel Lanzas",
@@ -41,7 +41,7 @@ const team = [
     image: "/images/daniel-lanzas.jpg",
     description:
       "Especialista en ciberseguridad ofensiva que aporta capacidad técnica y una visión fresca al equipo de pentesting. Participa activamente en las auditorías de seguridad, contribuyendo a la identificación de vulnerabilidades complejas en aplicaciones web e infraestructura.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/daniel-lanzas-larra%C3%B1eta/",
   },
   {
     name: "Antonio Harley Loureiro",
@@ -49,7 +49,7 @@ const team = [
     image: "/images/antonio-harley.jpg",
     description:
       "Certificado OSCP, lidera todos los proyectos de pentesting de CISEC. Su enfoque combina metodología rigurosa con creatividad técnica para identificar vulnerabilidades que los escáneres automáticos pasan por alto, asegurando que cada auditoría aporta valor real al cliente.",
-    linkedin: "https://www.linkedin.com/in/antonioharley/",
+    linkedin: "https://www.linkedin.com/in/antonio-harley-0x1/",
   },
 ];
 

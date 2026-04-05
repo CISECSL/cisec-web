@@ -67,7 +67,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} CISEC - Consultoría de Inteligencia y Securización SL. Todos los derechos reservados.
           </p>
           <a
-            href="https://www.linkedin.com/in/alvaromoralesmoreno/"
+            href="https://www.linkedin.com/company/cisec-sl/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-muted-foreground hover:text-foreground"

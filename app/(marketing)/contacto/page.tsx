@@ -46,7 +46,7 @@ const contactInfo = [
     icon: ExternalLink,
     label: "LinkedIn",
     value: "CISEC en LinkedIn",
-    href: "https://www.linkedin.com/company/cisec-es",
+    href: "https://www.linkedin.com/company/cisec-sl/",
   },
 ];
 

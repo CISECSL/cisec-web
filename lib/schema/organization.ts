@@ -12,7 +12,10 @@ export function organizationSchema() {
       addressRegion: "Madrid",
       addressCountry: "ES",
     },
-    sameAs: ["https://www.linkedin.com/in/alvaromoralesmoreno/"],
+    sameAs: [
+      "https://www.linkedin.com/company/cisec-sl/",
+      "https://www.linkedin.com/in/alvaro-morales-ab6480194/",
+    ],
     contactPoint: {
       "@type": "ContactPoint",
       email: "info@cisec.es",
