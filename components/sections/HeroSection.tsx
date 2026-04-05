@@ -1,0 +1,34 @@
+"use client";
+
+import Link from "next/link";
+import { SplitText } from "@/components/ui/SplitText";
+import { BlurText } from "@/components/ui/BlurText";
+import { buttonVariants } from "@/components/ui/button";
+import { ColorBends } from "@/components/ui/ColorBends";
+
+export function HeroSection() {
+  return (
+    <section className="relative flex min-h-[85vh] items-center overflow-hidden">
+      <ColorBends />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+          <SplitText text="Descubrimos las vulnerabilidades de tu empresa antes que los atacantes" />
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+          <BlurText
+            text="Pentesting manual por expertos certificados OSCP. Para empresas que no pueden permitirse una brecha de seguridad."
+            delay={400}
+          />
+        </p>
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <Link href="/contacto" className={buttonVariants({ size: "lg" })}>
+            Solicita presupuesto gratuito
+          </Link>
+          <a href="#servicios" className={buttonVariants({ variant: "outline", size: "lg" })}>
+            Ver servicios
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
