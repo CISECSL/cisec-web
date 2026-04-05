@@ -69,7 +69,7 @@ export default function SobreNosotrosPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema),
+          __html: JSON.stringify(organizationSchema()),
         }}
       />
 
