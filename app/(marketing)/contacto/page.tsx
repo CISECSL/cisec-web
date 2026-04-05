@@ -6,9 +6,9 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { FadeContent } from "@/components/ui/FadeContent";
 
 export const metadata: Metadata = {
-  title: "Contacto | CISEC Ciberseguridad",
+  title: "Contacto",
   description:
-    "Contacta con CISEC para una consulta gratuita sobre pentesting, auditor\u00eda de seguridad o cumplimiento normativo. Respuesta en menos de 24 horas.",
+    "Contacta con CISEC para una consulta gratuita sobre pentesting, auditoría de seguridad o cumplimiento normativo. Respuesta en menos de 24 horas.",
   alternates: { canonical: "/contacto" },
   openGraph: {
     title: "Contacto | CISEC Ciberseguridad",
@@ -32,14 +32,14 @@ const contactInfo = [
   },
   {
     icon: MapPin,
-    label: "Ubicaci\u00f3n",
+    label: "Ubicación",
     value: "Las Rozas, Madrid",
     href: undefined,
   },
   {
     icon: Clock,
     label: "Horario",
-    value: "L\u2013V 9:00\u201318:00",
+    value: "L-V 9:00 - 18:00",
     href: undefined,
   },
   {
@@ -66,11 +66,9 @@ export default function ContactoPage() {
 
           <FadeContent>
             <div className="mb-12 max-w-2xl">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Contacta con nosotros
-              </h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Cu\u00e9ntanos qu\u00e9 necesitas y te responderemos en menos de 24 horas
+              <h1>Contacta con nosotros</h1>
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                Cuéntanos qué necesitas y te responderemos en menos de 24 horas
                 con una propuesta adaptada a tu empresa.
               </p>
             </div>
@@ -89,10 +87,10 @@ export default function ContactoPage() {
               <div className="space-y-8">
                 <div>
                   <h2 className="text-xl font-semibold">
-                    Informaci\u00f3n de contacto
+                    Información de contacto
                   </h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Tambi\u00e9n puedes contactarnos directamente por cualquiera de
+                    También puedes contactarnos directamente por cualquiera de
                     estos medios.
                   </p>
                 </div>
@@ -138,7 +136,7 @@ export default function ContactoPage() {
                   <h3 className="font-semibold">Consulta gratuita</h3>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Evaluamos tu caso sin compromiso y te proponemos un plan de
-                    acci\u00f3n adaptado a tu infraestructura y presupuesto.
+                    acción adaptado a tu infraestructura y presupuesto.
                   </p>
                 </div>
               </div>

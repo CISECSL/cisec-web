@@ -7,7 +7,7 @@ import { trackFormSubmission } from "@/lib/tracking";
 const servicios = [
   "Pentesting Web",
   "Pentesting Infraestructura",
-  "Auditor\u00eda ENS",
+  "Auditoría ENS",
   "Respuesta a Incidentes",
   "Otro",
 ];
@@ -88,7 +88,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="servicio" className="mb-1.5 block text-sm font-medium">
-          Servicio de inter\u00e9s
+          Servicio de interés
         </label>
         <select
           id="servicio"
@@ -114,7 +114,7 @@ export function ContactForm() {
           required
           rows={5}
           className="w-full rounded-lg border border-border bg-card px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-          placeholder="Cu\u00e9ntanos qu\u00e9 necesitas..."
+          placeholder="Cuéntanos qué necesitas..."
         />
       </div>
 

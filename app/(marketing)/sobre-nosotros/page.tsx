@@ -6,14 +6,14 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { FadeContent } from "@/components/ui/FadeContent";
 
 export const metadata: Metadata = {
-  title: "Sobre Nosotros | CISEC Ciberseguridad",
+  title: "Sobre Nosotros",
   description:
-    "Conoce al equipo de CISEC: expertos certificados en ciberseguridad ofensiva que protegen empresas en Espa\u00f1a con pentesting manual y auditor\u00edas de seguridad.",
+    "Conoce al equipo de CISEC: expertos certificados en ciberseguridad ofensiva que protegen empresas en España con pentesting manual y auditorías de seguridad.",
   alternates: { canonical: "/sobre-nosotros" },
   openGraph: {
     title: "Sobre Nosotros | CISEC Ciberseguridad",
     description:
-      "Equipo de ciberseguridad ofensiva con certificaciones OSCP. Pentesting manual para empresas en Espa\u00f1a.",
+      "Equipo de ciberseguridad ofensiva con certificaciones OSCP. Pentesting manual para empresas en España.",
     url: "https://cisec.es/sobre-nosotros",
     siteName: "CISEC Ciberseguridad",
     locale: "es_ES",
@@ -27,17 +27,17 @@ const breadcrumbItems = [
 
 const team = [
   {
-    name: "\u00c1lvaro Morales Moreno",
+    name: "Álvaro Morales Moreno",
     role: "CEO",
     description:
-      "Lidera la estrategia de CISEC y la relaci\u00f3n con clientes. Con m\u00e1s de 20.000 seguidores en LinkedIn, comparte contenido t\u00e9cnico sobre ciberseguridad ofensiva y ayuda a CISOs y CTOs a entender el panorama real de amenazas al que se enfrentan sus organizaciones.",
+      "Lidera la estrategia de CISEC y la relación con clientes. Con más de 20.000 seguidores en LinkedIn, comparte contenido técnico sobre ciberseguridad ofensiva y ayuda a CISOs y CTOs a entender el panorama real de amenazas al que se enfrentan sus organizaciones.",
     linkedin: "https://www.linkedin.com/in/alvaromoralesmoreno/",
   },
   {
     name: "Antonio Harley Loureiro",
-    role: "CTO",
+    role: "CTO — OSCP Certified",
     description:
-      "Certificado OSCP, lidera todos los proyectos de pentesting de CISEC. Su enfoque combina metodolog\u00eda rigurosa con creatividad t\u00e9cnica para identificar vulnerabilidades que los esc\u00e1neres autom\u00e1ticos pasan por alto, asegurando que cada auditor\u00eda aporta valor real al cliente.",
+      "Certificado OSCP, lidera todos los proyectos de pentesting de CISEC. Su enfoque combina metodología rigurosa con creatividad técnica para identificar vulnerabilidades que los escáneres automáticos pasan por alto, asegurando que cada auditoría aporta valor real al cliente.",
     linkedin: "https://www.linkedin.com/in/antonioharley/",
   },
 ];
@@ -45,21 +45,21 @@ const team = [
 const values = [
   {
     icon: Shield,
-    title: "Pentesting manual, no solo esc\u00e1neres",
+    title: "Pentesting manual, no solo escáneres",
     description:
-      "Cada auditor\u00eda incluye pruebas manuales realizadas por expertos certificados. Los esc\u00e1neres autom\u00e1ticos son un punto de partida, no el resultado final. Nuestro equipo analiza la l\u00f3gica de negocio, cadenas de ataque complejas y configuraciones espec\u00edficas que ning\u00fan scanner detecta.",
+      "Cada auditoría incluye pruebas manuales realizadas por expertos certificados. Los escáneres automáticos son un punto de partida, no el resultado final. Nuestro equipo analiza la lógica de negocio, cadenas de ataque complejas y configuraciones específicas que ningún scanner detecta.",
   },
   {
     icon: MessageSquare,
     title: "Transparencia total",
     description:
-      "Informes claros con evidencias reproducibles, clasificaci\u00f3n de riesgos por impacto de negocio y recomendaciones priorizadas. Sin jerga innecesaria ni m\u00e9tricas infladas. Tu equipo t\u00e9cnico y tu direcci\u00f3n reciben exactamente lo que necesitan para tomar decisiones.",
+      "Informes claros con evidencias reproducibles, clasificación de riesgos por impacto de negocio y recomendaciones priorizadas. Sin jerga innecesaria ni métricas infladas. Tu equipo técnico y tu dirección reciben exactamente lo que necesitan para tomar decisiones.",
   },
   {
     icon: Users,
-    title: "Comunicaci\u00f3n directa",
+    title: "Comunicación directa",
     description:
-      "Trabajas directamente con los pentesters que ejecutan las pruebas, sin intermediarios ni capas de gesti\u00f3n. Respuesta en el d\u00eda, llamadas cuando las necesites y un punto de contacto que conoce tu infraestructura de principio a fin.",
+      "Trabajas directamente con los pentesters que ejecutan las pruebas, sin intermediarios ni capas de gestión. Respuesta en el día, llamadas cuando las necesites y un punto de contacto que conoce tu infraestructura de principio a fin.",
   },
 ];
 
@@ -80,14 +80,9 @@ export default function SobreNosotrosPage() {
 
           <FadeContent>
             <div className="max-w-3xl">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                Sobre CISEC
-              </h1>
-              <p className="mt-6 text-lg text-muted-foreground">
-                Somos una empresa de ciberseguridad ofensiva especializada en
-                pentesting manual para empresas en Espa\u00f1a. Nuestro objetivo es
-                sencillo: encontrar las vulnerabilidades de tu organizaci\u00f3n antes
-                de que lo haga un atacante.
+              <h1>Sobre CISEC</h1>
+              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+                Somos una empresa de ciberseguridad ofensiva especializada en pentesting manual para empresas en España. Nuestro objetivo es sencillo: encontrar las vulnerabilidades de tu organización antes de que lo haga un atacante.
               </p>
             </div>
           </FadeContent>
@@ -99,25 +94,13 @@ export default function SobreNosotrosPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FadeContent>
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                Por qu\u00e9 naci\u00f3 CISEC
-              </h2>
-              <div className="mt-6 space-y-4 text-muted-foreground">
+              <h2>Por qué nació CISEC</h2>
+              <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
                 <p>
-                  CISEC naci\u00f3 de una frustraci\u00f3n com\u00fan en el sector: empresas que
-                  recib\u00edan informes de auditor\u00eda generados autom\u00e1ticamente, llenos
-                  de falsos positivos y sin contexto de negocio. Informes que
-                  acababan en un caj\u00f3n porque nadie pod\u00eda priorizar las acciones ni
-                  entender el riesgo real.
+                  CISEC nació de una frustración común en el sector: empresas que recibían informes de auditoría generados automáticamente, llenos de falsos positivos y sin contexto de negocio. Informes que acababan en un cajón porque nadie podía priorizar las acciones ni entender el riesgo real.
                 </p>
                 <p>
-                  Decidimos crear una firma de ciberseguridad ofensiva donde cada
-                  proyecto recibe la atenci\u00f3n de pentesters certificados que
-                  entienden tanto la t\u00e9cnica como el negocio. Trabajamos con
-                  empresas que necesitan resultados accionables, no documentos de
-                  cumplimiento que no aportan valor. Desde PYMEs hasta grandes
-                  corporaciones, adaptamos nuestro enfoque a la realidad de cada
-                  organizaci\u00f3n.
+                  Decidimos crear una firma de ciberseguridad ofensiva donde cada proyecto recibe la atención de pentesters certificados que entienden tanto la técnica como el negocio. Trabajamos con empresas que necesitan resultados accionables, no documentos de cumplimiento que no aportan valor. Desde PYMEs hasta grandes corporaciones, adaptamos nuestro enfoque a la realidad de cada organización.
                 </p>
               </div>
             </div>
@@ -129,19 +112,16 @@ export default function SobreNosotrosPage() {
       <section className="border-t border-border bg-muted/30 py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FadeContent>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Nuestro equipo
-            </h2>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              Un equipo reducido de especialistas con experiencia real en
-              ciberseguridad ofensiva. Sin burocracia, sin rotaci\u00f3n de personal.
+            <h2>Nuestro equipo</h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+              Un equipo reducido de especialistas con experiencia real en ciberseguridad ofensiva. Sin burocracia, sin rotación de personal.
             </p>
           </FadeContent>
 
           <div className="mt-12 grid gap-8 sm:grid-cols-2">
             {team.map((member, i) => (
               <FadeContent key={member.name} delay={i * 150}>
-                <div className="rounded-xl border border-border bg-card p-6 sm:p-8">
+                <div className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-lg font-bold">{member.name}</h3>
@@ -159,7 +139,7 @@ export default function SobreNosotrosPage() {
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   </div>
-                  <p className="mt-4 text-sm text-muted-foreground">
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                     {member.description}
                   </p>
                 </div>
@@ -173,10 +153,8 @@ export default function SobreNosotrosPage() {
       <section className="border-t border-border py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FadeContent>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              C\u00f3mo trabajamos
-            </h2>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
+            <h2>Cómo trabajamos</h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
               Tres principios que definen cada proyecto que ejecutamos.
             </p>
           </FadeContent>
@@ -184,12 +162,12 @@ export default function SobreNosotrosPage() {
           <div className="mt-12 grid gap-8 sm:grid-cols-3">
             {values.map((value, i) => (
               <FadeContent key={value.title} delay={i * 150}>
-                <div className="rounded-xl border border-border bg-card p-6">
+                <div className="rounded-xl border border-border bg-card p-6 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <value.icon className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold">{value.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <h3 className="mt-4">{value.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {value.description}
                   </p>
                 </div>
@@ -204,12 +182,9 @@ export default function SobreNosotrosPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <FadeContent>
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                \u00bfQuieres trabajar con nosotros?
-              </h2>
-              <p className="mt-4 text-muted-foreground">
-                Cu\u00e9ntanos tu caso y te proponemos un plan adaptado a tu
-                organizaci\u00f3n. Sin compromiso.
+              <h2>¿Quieres trabajar con nosotros?</h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                Cuéntanos tu caso y te proponemos un plan adaptado a tu organización. Sin compromiso.
               </p>
               <div className="mt-8">
                 <Link
