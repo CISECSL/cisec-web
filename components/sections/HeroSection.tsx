@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SplitText } from "@/components/ui/SplitText";
+import DecryptedText from "@/components/ui/DecryptedText";
 import { BlurText } from "@/components/ui/BlurText";
 import { buttonVariants } from "@/components/ui/button";
 import { ColorBends } from "@/components/ui/ColorBends";
@@ -12,7 +12,15 @@ export function HeroSection() {
       <ColorBends />
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-          <SplitText text="Descubrimos las vulnerabilidades de tu empresa antes que los atacantes" />
+          <DecryptedText
+            text="Descubrimos las vulnerabilidades de tu empresa antes que los atacantes"
+            animateOn="view"
+            speed={40}
+            sequential={true}
+            revealDirection="start"
+            className="text-foreground"
+            encryptedClassName="text-primary/40"
+          />
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
           <BlurText
