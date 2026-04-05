@@ -14,7 +14,6 @@ export function Analytics() {
     if (stored === "accepted") setConsent(true);
   }, []);
 
-  // Listen for consent changes
   useEffect(() => {
     const handler = () => {
       const stored = localStorage.getItem("cisec-cookie-consent");
@@ -30,23 +29,21 @@ export function Analytics() {
     <>
       {/* Google Tag Manager */}
       {GTM_ID && (
-        <>
-          <Script
-            id="gtm-script"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${GTM_ID}');`,
-            }}
-          />
-        </>
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GTM_ID}');`,
+          }}
+        />
       )}
 
-      {/* Google Analytics 4 (standalone, fallback if no GTM) */}
-      {GA_ID && !GTM_ID && (
+      {/* Google Analytics 4 — always load alongside GTM as backup */}
+      {GA_ID && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
@@ -57,7 +54,8 @@ export function Analytics() {
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-              gtag('js',new Date());gtag('config','${GA_ID}',{page_path:window.location.pathname});`,
+              gtag('js',new Date());
+              gtag('config','${GA_ID}',{page_path:window.location.pathname,send_page_view:true});`,
             }}
           />
         </>
@@ -66,7 +64,6 @@ export function Analytics() {
   );
 }
 
-// Helper to fire Google Ads conversion events
 export function trackConversion(conversionId: string, conversionLabel: string) {
   if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
     (window as any).gtag("event", "conversion", {
