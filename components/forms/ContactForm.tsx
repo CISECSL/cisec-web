@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { submitContactForm } from "@/app/(marketing)/contacto/actions";
+import { trackFormSubmission } from "@/lib/tracking";
 
 const servicios = [
   "Pentesting Web",
@@ -15,6 +16,12 @@ export function ContactForm() {
   const [state, formAction, pending] = useActionState(submitContactForm, {
     success: false,
   });
+
+  useEffect(() => {
+    if (state.success) {
+      trackFormSubmission();
+    }
+  }, [state.success]);
 
   if (state.success) {
     return (
