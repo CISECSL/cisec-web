@@ -10,6 +10,7 @@ export function HeroSection() {
   return (
     <section className="relative flex min-h-[85vh] items-center overflow-hidden">
       <ColorBends />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
           <DecryptedText

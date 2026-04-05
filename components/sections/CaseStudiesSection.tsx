@@ -19,7 +19,7 @@ const cases = [
 
 export function CaseStudiesSection() {
   return (
-    <section className="py-20">
+    <section className="py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeContent>
           <h2 className="text-center text-3xl font-bold sm:text-4xl">Casos de éxito</h2>
@@ -30,7 +30,7 @@ export function CaseStudiesSection() {
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {cases.map((c, i) => (
             <FadeContent key={c.title} delay={i * 150}>
-              <div className="rounded-xl border border-border bg-card p-6">
+              <div className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
                 <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                   {c.tag}
                 </span>

@@ -3,7 +3,7 @@ import { FadeContent } from "@/components/ui/FadeContent";
 
 export function CTASection() {
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden py-28">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
       <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
         <FadeContent>

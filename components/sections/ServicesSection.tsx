@@ -39,7 +39,7 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="servicios" className="py-20">
+    <section id="servicios" className="py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeContent>
           <h2 className="text-center text-3xl font-bold sm:text-4xl">Servicios de Ciberseguridad</h2>
@@ -52,7 +52,7 @@ export function ServicesSection() {
             <FadeContent key={service.href} delay={i * 100}>
               <Link
                 href={service.href}
-                className="group block rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary/50"
+                className="group block rounded-xl border border-border bg-card p-6 transition-all duration-500 ease-[cubic-bezier(0,1,0.5,1)] hover:border-primary/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
               >
                 <service.icon className="h-8 w-8 text-primary" aria-hidden="true" />
                 <h3 className="mt-4 text-xl font-semibold">{service.title}</h3>
