@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerSections = [
   {
@@ -33,7 +34,10 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <Link href="/" className="text-xl font-bold text-foreground">CISEC</Link>
+            <Link href="/" className="flex items-center gap-2">
+              <Image src="/images/logo-cisec.png" alt="CISEC" width={28} height={28} className="h-7 w-7 invert" />
+              <span className="text-xl font-bold text-foreground">CISEC</span>
+            </Link>
             <p className="mt-3 text-sm text-muted-foreground">
               Consultoría de Inteligencia y Securización SL. Pentesting manual por expertos certificados.
             </p>

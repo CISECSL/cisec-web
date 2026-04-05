@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -25,8 +26,15 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="text-xl font-bold tracking-tight text-foreground">
-          CISEC
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/images/logo-cisec.png"
+            alt="CISEC"
+            width={32}
+            height={32}
+            className="h-8 w-8 invert"
+          />
+          <span className="text-xl font-bold tracking-tight text-foreground">CISEC</span>
         </Link>
 
         {/* Desktop Nav */}

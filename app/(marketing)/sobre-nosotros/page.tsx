@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Shield, MessageSquare, Users, ExternalLink } from "lucide-react";
 import { organizationSchema } from "@/lib/schema";
@@ -29,13 +30,23 @@ const team = [
   {
     name: "Álvaro Morales Moreno",
     role: "CEO",
+    image: "/images/alvaro-morales.jpg",
     description:
       "Lidera la estrategia de CISEC y la relación con clientes. Con más de 20.000 seguidores en LinkedIn, comparte contenido técnico sobre ciberseguridad ofensiva y ayuda a CISOs y CTOs a entender el panorama real de amenazas al que se enfrentan sus organizaciones.",
     linkedin: "https://www.linkedin.com/in/alvaromoralesmoreno/",
   },
   {
+    name: "Daniel Lanzad",
+    role: "Pentester",
+    image: "/images/daniel-lanzad.jpg",
+    description:
+      "Especialista en ciberseguridad ofensiva que aporta capacidad técnica y una visión fresca al equipo de pentesting. Participa activamente en las auditorías de seguridad, contribuyendo a la identificación de vulnerabilidades complejas en aplicaciones web e infraestructura.",
+    linkedin: "#",
+  },
+  {
     name: "Antonio Harley Loureiro",
     role: "CTO — OSCP Certified",
+    image: "/images/antonio-harley.jpg",
     description:
       "Certificado OSCP, lidera todos los proyectos de pentesting de CISEC. Su enfoque combina metodología rigurosa con creatividad técnica para identificar vulnerabilidades que los escáneres automáticos pasan por alto, asegurando que cada auditoría aporta valor real al cliente.",
     linkedin: "https://www.linkedin.com/in/antonioharley/",
@@ -118,30 +129,42 @@ export default function SobreNosotrosPage() {
             </p>
           </FadeContent>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {team.map((member, i) => (
               <FadeContent key={member.name} delay={i * 150}>
-                <div className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-bold">{member.name}</h3>
-                      <p className="text-sm font-medium text-primary">
-                        {member.role}
-                      </p>
-                    </div>
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors hover:bg-primary/20"
-                      aria-label={`LinkedIn de ${member.name}`}
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                <div className="rounded-xl border border-border bg-card overflow-hidden transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+                  {/* Photo */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={`Foto de ${member.name}`}
+                      fill
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                   </div>
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                    {member.description}
-                  </p>
+                  <div className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-bold">{member.name}</h3>
+                        <p className="text-sm font-medium text-primary">
+                          {member.role}
+                        </p>
+                      </div>
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors hover:bg-primary/20"
+                        aria-label={`LinkedIn de ${member.name}`}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      {member.description}
+                    </p>
+                  </div>
                 </div>
               </FadeContent>
             ))}
