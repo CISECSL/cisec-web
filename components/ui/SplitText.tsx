@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface SplitTextProps {
   text: string;
@@ -8,36 +8,49 @@ interface SplitTextProps {
   delay?: number;
 }
 
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+
 export function SplitText({ text, className, delay = 30 }: SplitTextProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [displayText, setDisplayText] = useState(text.replace(/[^\s]/g, "_"));
+  const [started, setStarted] = useState(false);
+
+  const animate = useCallback(() => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setDisplayText(
+        text
+          .split("")
+          .map((char, i) => {
+            if (char === " ") return " ";
+            if (i < iteration) return char;
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+      iteration += 0.5;
+      if (iteration >= text.length) clearInterval(interval);
+    }, delay);
+    return () => clearInterval(interval);
+  }, [text, delay]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true);
+          animate();
+        }
+      },
       { threshold: 0.1 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
-
-  const words = text.split(" ");
+  }, [started, animate]);
 
   return (
     <span ref={ref} className={className}>
-      {words.map((word, i) => (
-        <span
-          key={i}
-          className="inline-block transition-all duration-500"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(20px)",
-            transitionDelay: `${i * delay}ms`,
-          }}
-        >
-          {word}{i < words.length - 1 ? "\u00A0" : ""}
-        </span>
-      ))}
+      {displayText}
     </span>
   );
 }

@@ -56,8 +56,8 @@
   --card-foreground: #e2e8f0;
   --popover: #111111;
   --popover-foreground: #e2e8f0;
-  --primary: #00d4ff;
-  --primary-foreground: #0a0a0a;
+  --primary: #B91C1C;
+  --primary-foreground: #ffffff;
   --secondary: #1e293b;
   --secondary-foreground: #e2e8f0;
   --muted: #1e293b;
@@ -67,8 +67,8 @@
   --destructive: #ef4444;
   --border: #1e293b;
   --input: #1e293b;
-  --ring: #00d4ff;
-  --chart-1: #00d4ff;
+  --ring: #B91C1C;
+  --chart-1: #B91C1C;
   --chart-2: #7c3aed;
   --chart-3: #06b6d4;
   --chart-4: #8b5cf6;
@@ -76,12 +76,12 @@
   --radius: 0.5rem;
   --sidebar: #111111;
   --sidebar-foreground: #e2e8f0;
-  --sidebar-primary: #00d4ff;
-  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-primary: #B91C1C;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #1e293b;
   --sidebar-accent-foreground: #e2e8f0;
   --sidebar-border: #1e293b;
-  --sidebar-ring: #00d4ff;
+  --sidebar-ring: #B91C1C;
 }
 
 /* ── Dark mode — CISEC palette ── */
@@ -92,8 +92,8 @@
   --card-foreground: #e2e8f0;
   --popover: #111111;
   --popover-foreground: #e2e8f0;
-  --primary: #00d4ff;
-  --primary-foreground: #0a0a0a;
+  --primary: #B91C1C;
+  --primary-foreground: #ffffff;
   --secondary: #1e293b;
   --secondary-foreground: #e2e8f0;
   --muted: #1e293b;
@@ -103,20 +103,20 @@
   --destructive: #ef4444;
   --border: #1e293b;
   --input: #1e293b;
-  --ring: #00d4ff;
-  --chart-1: #00d4ff;
+  --ring: #B91C1C;
+  --chart-1: #B91C1C;
   --chart-2: #7c3aed;
   --chart-3: #06b6d4;
   --chart-4: #8b5cf6;
   --chart-5: #22d3ee;
   --sidebar: #111111;
   --sidebar-foreground: #e2e8f0;
-  --sidebar-primary: #00d4ff;
-  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-primary: #B91C1C;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #1e293b;
   --sidebar-accent-foreground: #e2e8f0;
   --sidebar-border: #1e293b;
-  --sidebar-ring: #00d4ff;
+  --sidebar-ring: #B91C1C;
 }
 
 @layer base {
