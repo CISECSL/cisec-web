@@ -27,12 +27,13 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/images/logo-cisec.png"
             alt="CISEC"
             width={32}
             height={32}
-            className="h-8 w-8 invert"
+            className="h-8 w-8"
           />
           <span className="text-xl font-bold tracking-tight text-foreground">CISEC</span>
         </Link>

@@ -35,7 +35,8 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-4">
           <div>
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/images/logo-cisec.png" alt="CISEC" width={28} height={28} className="h-7 w-7 invert" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/logo-cisec.png" alt="CISEC" width={28} height={28} className="h-7 w-7" />
               <span className="text-xl font-bold text-foreground">CISEC</span>
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">

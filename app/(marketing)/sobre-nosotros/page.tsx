@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { TeamPhoto } from "@/components/ui/TeamPhoto";
 import { Shield, MessageSquare, Users, ExternalLink } from "lucide-react";
 import { organizationSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
@@ -36,9 +36,9 @@ const team = [
     linkedin: "https://www.linkedin.com/in/alvaromoralesmoreno/",
   },
   {
-    name: "Daniel Lanzad",
+    name: "Daniel Lanzas",
     role: "Pentester",
-    image: "/images/daniel-lanzad.jpg",
+    image: "/images/daniel-lanzas.jpg",
     description:
       "Especialista en ciberseguridad ofensiva que aporta capacidad técnica y una visión fresca al equipo de pentesting. Participa activamente en las auditorías de seguridad, contribuyendo a la identificación de vulnerabilidades complejas en aplicaciones web e infraestructura.",
     linkedin: "#",
@@ -133,16 +133,11 @@ export default function SobreNosotrosPage() {
             {team.map((member, i) => (
               <FadeContent key={member.name} delay={i * 150}>
                 <div className="rounded-xl border border-border bg-card overflow-hidden transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-                  {/* Photo */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={member.image}
-                      alt={`Foto de ${member.name}`}
-                      fill
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
+                  <TeamPhoto
+                    src={member.image}
+                    alt={`Foto de ${member.name}`}
+                    initials={member.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
+                  />
                   <div className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
