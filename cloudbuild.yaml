@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SANITY_PROJECT_ID=rj6f9n1t'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SANITY_DATASET=production'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_SITE_URL=https://cisec.es'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_GTM_ID=GTM-TG6WFFJ9'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_GA_ID=G-EDYC9W3SJP'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/aisac-infra/containers/cisec-web:latest'
+      - '.'
+images:
+  - 'europe-west1-docker.pkg.dev/aisac-infra/containers/cisec-web:latest'
+timeout: '600s'
