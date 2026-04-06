@@ -1,11 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useRef, useState, useEffect, useCallback } from "react";
 
 const stats = [
   { value: 50, suffix: "+", label: "Pentests realizados" },
@@ -14,76 +9,68 @@ const stats = [
 ];
 
 export function StatsSection() {
-  const containerRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [counts, setCounts] = useState(stats.map(() => 0));
+  const hasAnimated = useRef(false);
 
-  useGSAP(
-    () => {
-      if (!containerRef.current) return;
+  const animateCounters = useCallback(() => {
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
 
-      // Animate each stat number
-      const numbers =
-        containerRef.current.querySelectorAll("[data-stat-value]");
-      numbers.forEach((el) => {
-        const target = parseInt(el.getAttribute("data-stat-value") || "0");
-        const suffix = el.getAttribute("data-stat-suffix") || "";
-        const obj = { val: 0 };
+    const duration = 2000;
+    const start = performance.now();
 
-        gsap.to(obj, {
-          val: target,
-          duration: 2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-          onUpdate: () => {
-            el.textContent = Math.round(obj.val) + suffix;
-          },
-        });
-      });
+    function tick(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out quad
+      const eased = 1 - (1 - progress) * (1 - progress);
 
-      // Stats blocks entrance - elastic bounce
-      gsap.fromTo(
-        containerRef.current.querySelectorAll("[data-stat]"),
-        { y: 40, opacity: 0, scale: 0.8 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "elastic.out(1, 0.6)",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
+      setCounts(stats.map((s) => Math.round(s.value * eased)));
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          animateCounters();
+          observer.unobserve(el);
         }
-      );
-    },
-    { scope: containerRef }
-  );
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [animateCounters]);
 
   return (
-    <section
-      ref={containerRef}
-      className="border-y border-border bg-card/50 py-20"
-    >
+    <section ref={ref} className="border-y border-border bg-card/50 py-20">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
-        {stats.map((stat) => (
-          <div key={stat.label} data-stat className="text-center">
-            <div
-              className="text-5xl font-extrabold tracking-tight text-primary sm:text-6xl"
-              data-stat-value={stat.value}
-              data-stat-suffix={stat.suffix}
-            >
-              {stat.value}
-              {stat.suffix}
+        {stats.map((stat, i) => (
+          <div
+            key={stat.label}
+            className="text-center"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.85)",
+              transition: `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.15}s`,
+            }}
+          >
+            <div className="text-5xl font-extrabold tracking-tight text-primary sm:text-6xl">
+              {counts[i]}{stat.suffix}
             </div>
-            <div className="mt-2 text-sm text-muted-foreground">
-              {stat.label}
-            </div>
+            <div className="mt-2 text-sm text-muted-foreground">{stat.label}</div>
           </div>
         ))}
       </div>

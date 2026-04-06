@@ -15,45 +15,13 @@ gsap.registerPlugin(ScrollTrigger);
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      if (!sectionRef.current) return;
+  // GSAP only for parallax on scroll — not for entrance animations
+  useGSAP(() => {
+    if (!sectionRef.current) return;
 
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      // 1. Fade in ColorBends background
-      tl.fromTo(
-        sectionRef.current.querySelector("[data-hero-bg]"),
-        { opacity: 0 },
-        { opacity: 1, duration: 1.5 }
-      );
-
-      // 2. Animate the headline container
-      tl.fromTo(
-        sectionRef.current.querySelector("[data-hero-headline]"),
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1 },
-        "-=0.8"
-      );
-
-      // 3. Animate the subtitle
-      tl.fromTo(
-        sectionRef.current.querySelector("[data-hero-subtitle]"),
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        "-=0.6"
-      );
-
-      // 4. Animate the CTAs
-      tl.fromTo(
-        sectionRef.current.querySelectorAll("[data-hero-cta]"),
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
-        "-=0.4"
-      );
-
-      // Parallax on scroll
-      gsap.to(sectionRef.current.querySelector("[data-hero-content]"), {
+    const content = sectionRef.current.querySelector("[data-hero-content]");
+    if (content) {
+      gsap.to(content, {
         yPercent: -15,
         ease: "none",
         scrollTrigger: {
@@ -63,24 +31,31 @@ export function HeroSection() {
           scrub: 1.5,
         },
       });
-    },
-    { scope: sectionRef }
-  );
+    }
+  }, { scope: sectionRef });
 
   return (
     <section
       ref={sectionRef}
       className="relative flex min-h-[85vh] items-center overflow-hidden"
     >
-      <div data-hero-bg>
+      {/* Animated background */}
+      <div className="animate-fade-in" style={{ animationDuration: "1.5s" }}>
         <ColorBends />
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
-      <div data-hero-content className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+
+      {/* Content with CSS entrance animations */}
+      <div
+        data-hero-content
+        className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
+      >
         <h1
-          data-hero-headline
-          className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
-          style={{ willChange: "transform" }}
+          className="max-w-4xl"
+          style={{
+            opacity: 1,
+            animation: "heroSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both",
+          }}
         >
           <DecryptedText
             text="Descubrimos las vulnerabilidades de tu empresa antes que los atacantes"
@@ -93,34 +68,50 @@ export function HeroSection() {
           />
         </h1>
         <p
-          data-hero-subtitle
           className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl"
-          style={{ willChange: "transform" }}
+          style={{
+            animation: "heroSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both",
+          }}
         >
           <BlurText
             text="Pentesting manual por expertos certificados OSCP. Para empresas que no pueden permitirse una brecha de seguridad."
             delay={400}
           />
         </p>
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+        <div
+          className="mt-10 flex flex-col gap-4 sm:flex-row"
+          style={{
+            animation: "heroSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both",
+          }}
+        >
           <Link
             href="/contacto"
-            data-hero-cta
             className={buttonVariants({ size: "lg" })}
-            style={{ willChange: "transform" }}
           >
             Solicita presupuesto gratuito
           </Link>
           <a
             href="#servicios"
-            data-hero-cta
             className={buttonVariants({ variant: "outline", size: "lg" })}
-            style={{ willChange: "transform" }}
           >
             Ver servicios
           </a>
         </div>
       </div>
+
+      {/* CSS keyframes for hero entrance */}
+      <style jsx>{`
+        @keyframes heroSlideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }

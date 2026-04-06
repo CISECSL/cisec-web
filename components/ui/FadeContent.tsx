@@ -1,11 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useRef, useState, useEffect, type ReactNode } from "react";
 
 interface FadeContentProps {
   children: ReactNode;
@@ -21,36 +16,43 @@ export function FadeContent({
   className,
   delay = 0,
   direction = "up",
-  distance = 60,
-  duration = 1,
+  distance = 40,
+  duration = 0.7,
 }: FadeContentProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const axis = direction === "up" || direction === "down" ? "y" : "x";
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const axis = direction === "up" || direction === "down" ? "Y" : "X";
   const value = direction === "up" || direction === "left" ? distance : -distance;
 
-  useGSAP(() => {
-    if (!ref.current) return;
-    gsap.fromTo(
-      ref.current,
-      { [axis]: value, opacity: 0 },
-      {
-        [axis]: 0,
-        opacity: 1,
-        duration,
-        delay,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top 90%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-  }, { scope: ref });
-
   return (
-    <div ref={ref} className={className}>
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translate(0, 0)" : `translate${axis}(${value}px)`,
+        transition: `opacity ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+      }}
+    >
       {children}
     </div>
   );
