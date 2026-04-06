@@ -91,11 +91,9 @@ export function ServicesSection() {
                 className="group block rounded-xl border border-border bg-card p-6 transition-all duration-500 ease-[cubic-bezier(0,1,0.5,1)] hover:border-primary/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
                 style={{
                   opacity: isVisible ? 1 : 0,
-                  transform: isVisible
-                    ? "translateY(0) rotateX(0) scale(1)"
-                    : "translateY(60px) rotateX(8deg) scale(0.95)",
-                  transformOrigin: "center bottom",
-                  transition: `opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + i * 0.12}s, transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) ${0.2 + i * 0.12}s`,
+                  clipPath: isVisible ? "inset(0% 0 0 0)" : "inset(100% 0 0 0)",
+                  transform: isVisible ? "translateY(0)" : "translateY(40px)",
+                  transition: `opacity 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + i * 0.15}s, clip-path 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + i * 0.15}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${0.2 + i * 0.15}s`,
                 }}
               >
                 <service.icon className="h-8 w-8 text-primary" aria-hidden="true" />

@@ -5,10 +5,10 @@ import { useRef, useState, useEffect, type ReactNode } from "react";
 interface FadeContentProps {
   children: ReactNode;
   className?: string;
-  delay?: number;
+  delay?: number; // in milliseconds (e.g. 150 = 0.15s)
   direction?: "up" | "down" | "left" | "right";
   distance?: number;
-  duration?: number;
+  duration?: number; // in milliseconds (e.g. 700 = 0.7s)
 }
 
 export function FadeContent({
@@ -17,7 +17,7 @@ export function FadeContent({
   delay = 0,
   direction = "up",
   distance = 40,
-  duration = 0.7,
+  duration = 700,
 }: FadeContentProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -43,6 +43,10 @@ export function FadeContent({
   const axis = direction === "up" || direction === "down" ? "Y" : "X";
   const value = direction === "up" || direction === "left" ? distance : -distance;
 
+  // Convert ms to seconds for CSS
+  const durationS = duration / 1000;
+  const delayS = delay / 1000;
+
   return (
     <div
       ref={ref}
@@ -50,7 +54,7 @@ export function FadeContent({
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translate(0, 0)" : `translate${axis}(${value}px)`,
-        transition: `opacity ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+        transition: `opacity ${durationS}s cubic-bezier(0.16, 1, 0.3, 1) ${delayS}s, transform ${durationS}s cubic-bezier(0.16, 1, 0.3, 1) ${delayS}s`,
       }}
     >
       {children}
