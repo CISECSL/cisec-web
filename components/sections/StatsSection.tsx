@@ -43,19 +43,24 @@ export function StatsSection() {
         });
       });
 
-      // Stagger the stat blocks
-      gsap.from(containerRef.current.querySelectorAll("[data-stat]"), {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
+      // Stats blocks entrance - elastic bounce
+      gsap.fromTo(
+        containerRef.current.querySelectorAll("[data-stat]"),
+        { y: 40, opacity: 0, scale: 0.8 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "elastic.out(1, 0.6)",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
     },
     { scope: containerRef }
   );

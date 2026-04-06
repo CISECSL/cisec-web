@@ -27,30 +27,30 @@ export function FadeContent({
   const ref = useRef<HTMLDivElement>(null);
 
   const axis = direction === "up" || direction === "down" ? "y" : "x";
-  const value =
-    direction === "up" || direction === "left" ? distance : -distance;
+  const value = direction === "up" || direction === "left" ? distance : -distance;
 
-  useGSAP(
-    () => {
-      if (!ref.current) return;
-      gsap.from(ref.current, {
-        [axis]: value,
-        opacity: 0,
+  useGSAP(() => {
+    if (!ref.current) return;
+    gsap.fromTo(
+      ref.current,
+      { [axis]: value, opacity: 0 },
+      {
+        [axis]: 0,
+        opacity: 1,
         duration,
         delay,
         ease: "power3.out",
         scrollTrigger: {
           trigger: ref.current,
-          start: "top 85%",
+          start: "top 90%",
           toggleActions: "play none none none",
         },
-      });
-    },
-    { scope: ref }
-  );
+      }
+    );
+  }, { scope: ref });
 
   return (
-    <div ref={ref} className={className} style={{ willChange: "transform" }}>
+    <div ref={ref} className={className}>
       {children}
     </div>
   );

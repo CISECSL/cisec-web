@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { MagneticCard } from "@/components/ui/MagneticCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,42 +33,62 @@ export function CaseStudiesSection() {
       if (!containerRef.current) return;
 
       // Title animation
-      gsap.from(containerRef.current.querySelector("h2"), {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-      });
+      gsap.fromTo(
+        containerRef.current.querySelector("h2"),
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
 
       // Subtitle animation
-      gsap.from(containerRef.current.querySelector("[data-cases-subtitle]"), {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-      });
+      gsap.fromTo(
+        containerRef.current.querySelector("[data-cases-subtitle]"),
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
 
-      // Cards stagger
-      gsap.from(containerRef.current.querySelectorAll("[data-case-card]"), {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current.querySelector("[data-cases-grid]"),
-          start: "top 85%",
+      // Cards clip-path reveal
+      gsap.fromTo(
+        containerRef.current.querySelectorAll("[data-case-card]"),
+        {
+          clipPath: "inset(100% 0 0 0)",
+          y: 40,
+          opacity: 0,
         },
-      });
+        {
+          clipPath: "inset(0% 0 0 0)",
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: containerRef.current.querySelector("[data-cases-grid]"),
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -91,25 +112,26 @@ export function CaseStudiesSection() {
         </p>
         <div data-cases-grid className="mt-12 grid gap-6 md:grid-cols-2">
           {cases.map((c) => (
-            <div
-              key={c.title}
-              data-case-card
-              className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
-              style={{ willChange: "transform" }}
-            >
-              <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                {c.tag}
-              </span>
-              <h3 className="mt-4 text-lg font-semibold">{c.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {c.description}
-              </p>
-              <div className="mt-4 border-t border-border pt-4">
-                <span className="text-sm font-medium text-primary">
-                  &#10003; {c.result}
+            <MagneticCard key={c.title}>
+              <div
+                data-case-card
+                className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+                style={{ willChange: "transform" }}
+              >
+                <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                  {c.tag}
                 </span>
+                <h3 className="mt-4 text-lg font-semibold">{c.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {c.description}
+                </p>
+                <div className="mt-4 border-t border-border pt-4">
+                  <span className="text-sm font-medium text-primary">
+                    &#10003; {c.result}
+                  </span>
+                </div>
               </div>
-            </div>
+            </MagneticCard>
           ))}
         </div>
       </div>

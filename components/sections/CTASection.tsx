@@ -28,17 +28,19 @@ export function CTASection() {
       });
 
       // Text reveal
-      gsap.from(
+      gsap.fromTo(
         sectionRef.current.querySelectorAll("[data-cta-content] > *"),
+        { y: 40, opacity: 0 },
         {
-          y: 40,
-          opacity: 0,
+          y: 0,
+          opacity: 1,
           duration: 0.8,
           stagger: 0.15,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 75%",
+            toggleActions: "play none none none",
           },
         }
       );

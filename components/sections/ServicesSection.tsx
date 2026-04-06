@@ -6,6 +6,7 @@ import { Shield, Server, FileCheck, AlertTriangle } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { MagneticCard } from "@/components/ui/MagneticCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,44 +53,62 @@ export function ServicesSection() {
       if (!containerRef.current) return;
 
       // Title animation
-      gsap.from(containerRef.current.querySelector("h2"), {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-      });
-
-      // Subtitle animation
-      gsap.from(containerRef.current.querySelector("[data-service-subtitle]"), {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-      });
-
-      // Cards stagger
-      gsap.from(
-        containerRef.current.querySelectorAll("[data-service-card]"),
+      gsap.fromTo(
+        containerRef.current.querySelector("h2"),
+        { y: 30, opacity: 0 },
         {
-          y: 60,
-          opacity: 0,
+          y: 0,
+          opacity: 1,
           duration: 0.8,
-          stagger: 0.15,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: containerRef.current.querySelector(
-              "[data-service-grid]"
-            ),
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+
+      // Subtitle animation
+      gsap.fromTo(
+        containerRef.current.querySelector("[data-service-subtitle]"),
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+
+      // Cards animation - 3D tilt reveal
+      gsap.fromTo(
+        containerRef.current.querySelectorAll("[data-service-card]"),
+        {
+          rotateX: 8,
+          scale: 0.95,
+          opacity: 0,
+          y: 60,
+          transformOrigin: "center bottom",
+        },
+        {
+          rotateX: 0,
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: containerRef.current.querySelector("[data-service-grid]"),
             start: "top 85%",
+            toggleActions: "play none none none",
           },
         }
       );
@@ -114,32 +133,33 @@ export function ServicesSection() {
           Pentesting manual realizado por expertos certificados. Sin
           automatismos genéricos, sin falsos positivos.
         </p>
-        <div data-service-grid className="mt-12 grid gap-6 sm:grid-cols-2">
+        <div data-service-grid className="mt-12 grid gap-6 sm:grid-cols-2" style={{ perspective: "1000px" }}>
           {services.map((service) => (
-            <Link
-              key={service.href}
-              href={service.href}
-              data-service-card
-              className="group block rounded-xl border border-border bg-card p-6 transition-all duration-500 ease-[cubic-bezier(0,1,0.5,1)] hover:border-primary/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
-              style={{ willChange: "transform" }}
-            >
-              <service.icon
-                className="h-8 w-8 text-primary"
-                aria-hidden="true"
-              />
-              <h3 className="mt-4 text-xl font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {service.description}
-              </p>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm font-medium text-primary">
-                  {service.price}
-                </span>
-                <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
-                  Saber más &rarr;
-                </span>
-              </div>
-            </Link>
+            <MagneticCard key={service.href}>
+              <Link
+                href={service.href}
+                data-service-card
+                className="group block rounded-xl border border-border bg-card p-6 transition-all duration-500 ease-[cubic-bezier(0,1,0.5,1)] hover:border-primary/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+                style={{ willChange: "transform" }}
+              >
+                <service.icon
+                  className="h-8 w-8 text-primary"
+                  aria-hidden="true"
+                />
+                <h3 className="mt-4 text-xl font-semibold">{service.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {service.description}
+                </p>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-sm font-medium text-primary">
+                    {service.price}
+                  </span>
+                  <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
+                    Saber m&aacute;s &rarr;
+                  </span>
+                </div>
+              </Link>
+            </MagneticCard>
           ))}
         </div>
       </div>

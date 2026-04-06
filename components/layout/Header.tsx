@@ -1,10 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const servicios = [
   { name: "Pentesting Web", href: "/servicios/pentesting-web" },
@@ -22,9 +27,31 @@ const navLinks = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [serviciosOpen, setServiciosOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    if (!headerRef.current) return;
+
+    let lastScrollY = 0;
+
+    ScrollTrigger.create({
+      start: "top -80",
+      onUpdate: (self) => {
+        const scrollY = self.scroll();
+        if (scrollY > lastScrollY && scrollY > 200) {
+          // Scrolling down & past 200px
+          gsap.to(headerRef.current, { y: "-100%", duration: 0.3, ease: "power2.out" });
+        } else {
+          // Scrolling up
+          gsap.to(headerRef.current, { y: "0%", duration: 0.3, ease: "power2.out" });
+        }
+        lastScrollY = scrollY;
+      },
+    });
+  });
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
+    <header ref={headerRef} className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
