@@ -3,6 +3,7 @@ import { client } from "@/sanity/lib/client";
 import { allPostsQuery, postCountQuery } from "@/sanity/lib/queries";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { FadeContent } from "@/components/ui/FadeContent";
 
 export const revalidate = 3600;
 
@@ -38,14 +39,20 @@ export default async function BlogPage(props: { searchParams: Promise<{ page?: s
     <section className="py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumb items={[{ name: "Blog", href: "/blog" }]} />
-        <h1 className="text-3xl font-bold sm:text-4xl">Blog de Ciberseguridad</h1>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
-          Artículos sobre pentesting, vulnerabilidades y normativa de seguridad para empresas españolas.
-        </p>
+        <FadeContent>
+          <h1 className="text-3xl font-bold sm:text-4xl">Blog de Ciberseguridad</h1>
+          <p className="mt-4 max-w-2xl text-muted-foreground">
+            Artículos sobre pentesting, vulnerabilidades y normativa de seguridad para empresas españolas.
+          </p>
+        </FadeContent>
 
         {posts.length > 0 ? (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post: any) => <BlogCard key={post._id} post={post} />)}
+            {posts.map((post: any, i: number) => (
+              <FadeContent key={post._id} delay={i * 100}>
+                <BlogCard post={post} />
+              </FadeContent>
+            ))}
           </div>
         ) : (
           <p className="mt-12 text-muted-foreground">
