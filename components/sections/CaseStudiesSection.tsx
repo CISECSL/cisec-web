@@ -1,4 +1,11 @@
-import { FadeContent } from "@/components/ui/FadeContent";
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const cases = [
   {
@@ -18,29 +25,91 @@ const cases = [
 ];
 
 export function CaseStudiesSection() {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
+
+      // Title animation
+      gsap.from(containerRef.current.querySelector("h2"), {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
+
+      // Subtitle animation
+      gsap.from(containerRef.current.querySelector("[data-cases-subtitle]"), {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        },
+      });
+
+      // Cards stagger
+      gsap.from(containerRef.current.querySelectorAll("[data-case-card]"), {
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current.querySelector("[data-cases-grid]"),
+          start: "top 85%",
+        },
+      });
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <section className="py-28">
+    <section ref={containerRef} className="py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeContent>
-          <h2 className="text-center text-3xl font-bold sm:text-4xl">Casos de éxito</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground">
-            Resultados reales de nuestros servicios. Nombres anonimizados por confidencialidad.
-          </p>
-        </FadeContent>
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {cases.map((c, i) => (
-            <FadeContent key={c.title} delay={i * 150}>
-              <div className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-                <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                  {c.tag}
+        <h2
+          className="text-center text-3xl font-bold sm:text-4xl"
+          style={{ willChange: "transform" }}
+        >
+          Casos de éxito
+        </h2>
+        <p
+          data-cases-subtitle
+          className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground"
+          style={{ willChange: "transform" }}
+        >
+          Resultados reales de nuestros servicios. Nombres anonimizados por
+          confidencialidad.
+        </p>
+        <div data-cases-grid className="mt-12 grid gap-6 md:grid-cols-2">
+          {cases.map((c) => (
+            <div
+              key={c.title}
+              data-case-card
+              className="rounded-xl border border-border bg-card p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+              style={{ willChange: "transform" }}
+            >
+              <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                {c.tag}
+              </span>
+              <h3 className="mt-4 text-lg font-semibold">{c.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {c.description}
+              </p>
+              <div className="mt-4 border-t border-border pt-4">
+                <span className="text-sm font-medium text-primary">
+                  &#10003; {c.result}
                 </span>
-                <h3 className="mt-4 text-lg font-semibold">{c.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>
-                <div className="mt-4 border-t border-border pt-4">
-                  <span className="text-sm font-medium text-primary">✓ {c.result}</span>
-                </div>
               </div>
-            </FadeContent>
+            </div>
           ))}
         </div>
       </div>

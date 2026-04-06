@@ -1,44 +1,56 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface FadeContentProps {
   children: ReactNode;
   className?: string;
   delay?: number;
   direction?: "up" | "down" | "left" | "right";
+  distance?: number;
+  duration?: number;
 }
 
-export function FadeContent({ children, className, delay = 0, direction = "up" }: FadeContentProps) {
+export function FadeContent({
+  children,
+  className,
+  delay = 0,
+  direction = "up",
+  distance = 60,
+  duration = 1,
+}: FadeContentProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const axis = direction === "up" || direction === "down" ? "y" : "x";
+  const value =
+    direction === "up" || direction === "left" ? distance : -distance;
 
-  const transforms = {
-    up: "translateY(30px)",
-    down: "translateY(-30px)",
-    left: "translateX(30px)",
-    right: "translateX(-30px)",
-  };
+  useGSAP(
+    () => {
+      if (!ref.current) return;
+      gsap.from(ref.current, {
+        [axis]: value,
+        opacity: 0,
+        duration,
+        delay,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      });
+    },
+    { scope: ref }
+  );
 
   return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ${className ?? ""}`}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translate(0)" : transforms[direction],
-        transitionDelay: `${delay}ms`,
-      }}
-    >
+    <div ref={ref} className={className} style={{ willChange: "transform" }}>
       {children}
     </div>
   );

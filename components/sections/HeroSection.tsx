@@ -1,18 +1,81 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import DecryptedText from "@/components/ui/DecryptedText";
 import { BlurText } from "@/components/ui/BlurText";
 import { buttonVariants } from "@/components/ui/button";
 import { ColorBends } from "@/components/ui/ColorBends";
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (!sectionRef.current) return;
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      // 1. Fade in ColorBends background
+      tl.from(sectionRef.current.querySelector("[data-hero-bg]"), {
+        opacity: 0,
+        duration: 1.5,
+      });
+
+      // 2. Animate the headline container
+      tl.from(
+        sectionRef.current.querySelector("[data-hero-headline]"),
+        {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+        },
+        "-=0.8"
+      );
+
+      // 3. Animate the subtitle
+      tl.from(
+        sectionRef.current.querySelector("[data-hero-subtitle]"),
+        {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+        },
+        "-=0.6"
+      );
+
+      // 4. Animate the CTAs
+      tl.from(
+        sectionRef.current.querySelectorAll("[data-hero-cta]"),
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.15,
+        },
+        "-=0.4"
+      );
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="relative flex min-h-[85vh] items-center overflow-hidden">
-      <ColorBends />
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-[85vh] items-center overflow-hidden"
+    >
+      <div data-hero-bg>
+        <ColorBends />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+        <h1
+          data-hero-headline
+          className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+          style={{ willChange: "transform" }}
+        >
           <DecryptedText
             text="Descubrimos las vulnerabilidades de tu empresa antes que los atacantes"
             animateOn="view"
@@ -23,17 +86,31 @@ export function HeroSection() {
             encryptedClassName="text-primary/40"
           />
         </h1>
-        <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+        <p
+          data-hero-subtitle
+          className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl"
+          style={{ willChange: "transform" }}
+        >
           <BlurText
             text="Pentesting manual por expertos certificados OSCP. Para empresas que no pueden permitirse una brecha de seguridad."
             delay={400}
           />
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Link href="/contacto" className={buttonVariants({ size: "lg" })}>
+          <Link
+            href="/contacto"
+            data-hero-cta
+            className={buttonVariants({ size: "lg" })}
+            style={{ willChange: "transform" }}
+          >
             Solicita presupuesto gratuito
           </Link>
-          <a href="#servicios" className={buttonVariants({ variant: "outline", size: "lg" })}>
+          <a
+            href="#servicios"
+            data-hero-cta
+            className={buttonVariants({ variant: "outline", size: "lg" })}
+            style={{ willChange: "transform" }}
+          >
             Ver servicios
           </a>
         </div>
