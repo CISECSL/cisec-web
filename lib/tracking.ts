@@ -1,17 +1,16 @@
 export function trackFormSubmission(service?: string) {
   if (typeof window === "undefined") return;
 
-  // Google Ads conversion
-  const gadsId = process.env.NEXT_PUBLIC_GADS_ID;
-  if (gadsId && typeof (window as any).gtag === "function") {
-    (window as any).gtag("event", "conversion", {
-      send_to: gadsId,
-      event_category: "form",
+  // GA4 event → qualify_lead (linked to Google Ads AW-18020091441 via GA4)
+  if (typeof (window as any).gtag === "function") {
+    (window as any).gtag("event", "qualify_lead", {
+      event_category: "contact_form",
       event_label: service || "contacto",
+      service_interest: service || "general",
     });
   }
 
-  // GA4 custom event
+  // Also fire generate_lead for GA4 reporting
   if (typeof (window as any).gtag === "function") {
     (window as any).gtag("event", "generate_lead", {
       event_category: "contact_form",
