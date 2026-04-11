@@ -1,0 +1,71 @@
+name: Build and Deploy to GCP
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GCP_PROJECT_ID: aisac-infra
+  GCP_REGION: europe-west1
+  IMAGE_NAME: cisec-web
+  REGISTRY_HOSTNAME: europe-west1-docker.pkg.dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCP
+        run: |
+          gcloud auth configure-docker ${{ env.REGISTRY_HOSTNAME }}
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=rj6f9n1t \
+            --build-arg NEXT_PUBLIC_SANITY_DATASET=production \
+            --build-arg NEXT_PUBLIC_SITE_URL=https://cisec.es \
+            --build-arg NEXT_PUBLIC_GTM_ID=GTM-TG6WFFJ9 \
+            --build-arg NEXT_PUBLIC_GA_ID=G-EDYC9W3SJP \
+            --build-arg NEXT_PUBLIC_GADS_ID=AW-18020091441 \
+            -t ${{ env.REGISTRY_HOSTNAME }}/${{ env.GCP_PROJECT_ID }}/containers/${{ env.IMAGE_NAME }}:latest \
+            -t ${{ env.REGISTRY_HOSTNAME }}/${{ env.GCP_PROJECT_ID }}/containers/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.REGISTRY_HOSTNAME }}/${{ env.GCP_PROJECT_ID }}/containers/${{ env.IMAGE_NAME }}:latest
+          docker push ${{ env.REGISTRY_HOSTNAME }}/${{ env.GCP_PROJECT_ID }}/containers/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.IMAGE_NAME }} \
+            --image=${{ env.REGISTRY_HOSTNAME }}/${{ env.GCP_PROJECT_ID }}/containers/${{ env.IMAGE_NAME }}:latest \
+            --region=${{ env.GCP_REGION }} \
+            --platform=managed \
+            --allow-unauthenticated \
+            --set-env-vars="RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" \
+            --quiet
+
+      - name: Get deployment URL
+        run: |
+          URL=$(gcloud run services describe ${{ env.IMAGE_NAME }} --region=${{ env.GCP_REGION }} --format='value(status.url)')
+          echo "✅ Deployment successful!"
+          echo "Service URL: $URL"
