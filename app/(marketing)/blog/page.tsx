@@ -11,6 +11,21 @@ export const metadata: Metadata = {
   title: "Blog Ciberseguridad España",
   description: "Artículos sobre pentesting, vulnerabilidades, normativa NIS2/ENS y ciberseguridad para empresas. Por los expertos de CISEC.",
   alternates: { canonical: "https://cisec.es/blog" },
+  openGraph: {
+    title: "Blog Ciberseguridad España | CISEC",
+    description: "Artículos sobre pentesting, vulnerabilidades, normativa NIS2/ENS y ciberseguridad para empresas.",
+    url: "https://cisec.es/blog",
+    type: "website",
+    locale: "es_ES",
+    siteName: "CISEC Ciberseguridad",
+    images: [{ url: "https://cisec.es/images/logo-cisec.png", width: 1200, height: 630, alt: "CISEC Blog" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog Ciberseguridad España | CISEC",
+    description: "Artículos sobre pentesting, vulnerabilidades, normativa NIS2/ENS.",
+    images: ["https://cisec.es/images/logo-cisec.png"],
+  },
 };
 
 const POSTS_PER_PAGE = 10;

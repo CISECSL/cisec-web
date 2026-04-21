@@ -24,22 +24,46 @@ export async function generateStaticParams() {
   }
 }
 
+const DEFAULT_OG_IMAGE = "https://cisec.es/images/logo-cisec.png";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   try {
     const post = await client.fetch(postBySlugQuery, { slug });
     if (!post) return {};
+
+    const title = post.seo?.metaTitle || post.title;
+    const description = post.seo?.metaDescription || post.excerpt || "";
+    const canonicalUrl = `https://cisec.es/blog/${post.slug.current}`;
+    const ogImageUrl = post.seo?.ogImage
+      ? urlFor(post.seo.ogImage).width(1200).height(630).url()
+      : post.mainImage
+      ? urlFor(post.mainImage).width(1200).height(630).url()
+      : DEFAULT_OG_IMAGE;
+
     return {
-      title: post.seo?.metaTitle || post.title,
-      description: post.seo?.metaDescription || post.excerpt,
-      alternates: { canonical: `https://cisec.es/blog/${post.slug.current}` },
+      title,
+      description,
+      alternates: { canonical: canonicalUrl },
+      authors: post.author?.name ? [{ name: post.author.name }] : undefined,
+      keywords: post.category?.title ? [post.category.title, "ciberseguridad", "CISEC"] : undefined,
       openGraph: {
-        title: post.seo?.metaTitle || post.title,
-        description: post.seo?.metaDescription || post.excerpt,
+        title,
+        description,
         type: "article",
+        url: canonicalUrl,
+        locale: "es_ES",
+        siteName: "CISEC Ciberseguridad",
         publishedTime: post.publishedAt,
-        ...(post.seo?.ogImage && { images: [{ url: urlFor(post.seo.ogImage).width(1200).height(630).url() }] }),
-        ...(post.mainImage && !post.seo?.ogImage && { images: [{ url: urlFor(post.mainImage).width(1200).height(630).url() }] }),
+        modifiedTime: post._updatedAt,
+        authors: post.author?.name ? [post.author.name] : undefined,
+        images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [ogImageUrl],
       },
       ...(post.seo?.noIndex && { robots: { index: false } }),
     };
@@ -72,8 +96,11 @@ export default async function BlogPostPage({ params }: PageProps) {
               title: post.title,
               description: post.excerpt || "",
               url: `https://cisec.es/blog/${post.slug.current}`,
-              imageUrl: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined,
+              imageUrl: post.mainImage
+                ? urlFor(post.mainImage).width(1200).height(630).url()
+                : DEFAULT_OG_IMAGE,
               datePublished: post.publishedAt || new Date().toISOString(),
+              dateModified: post._updatedAt || post.publishedAt || new Date().toISOString(),
               authorName: post.author?.name || "CISEC",
             })
           ),

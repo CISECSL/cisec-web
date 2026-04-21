@@ -15,6 +15,7 @@ export function articleSchema({ title, description, url, imageUrl, datePublished
     headline: title,
     description,
     url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
     ...(imageUrl && { image: imageUrl }),
     datePublished,
     dateModified: dateModified || datePublished,

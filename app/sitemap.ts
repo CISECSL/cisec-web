@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
-import { postSlugsQuery } from "@/sanity/lib/queries";
+import { postSitemapQuery } from "@/sanity/lib/queries";
 
 const BASE_URL = "https://cisec.es";
 
@@ -20,10 +20,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let blogPages: MetadataRoute.Sitemap = [];
   try {
-    const slugs: string[] = await client.fetch(postSlugsQuery);
-    blogPages = slugs.map((slug) => ({
-      url: `${BASE_URL}/blog/${slug}`,
-      lastModified: new Date(),
+    const posts: { slug: string; _updatedAt: string; publishedAt?: string }[] =
+      await client.fetch(postSitemapQuery);
+    blogPages = posts.map((post) => ({
+      url: `${BASE_URL}/blog/${post.slug}`,
+      lastModified: new Date(post._updatedAt || post.publishedAt || Date.now()),
       changeFrequency: "weekly" as const,
       priority: 0.7,
     }));
