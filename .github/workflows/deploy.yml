@@ -49,7 +49,6 @@ jobs:
             --region=${{ env.GCP_REGION }} \
             --platform=managed \
             --allow-unauthenticated \
-            --set-env-vars="RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" \
             --quiet
 
       - name: Get deployment URL
