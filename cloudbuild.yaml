@@ -17,4 +17,6 @@ steps:
       - '.'
 images:
   - 'europe-west1-docker.pkg.dev/aisac-infra/containers/cisec-web:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
 timeout: '600s'
